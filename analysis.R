@@ -57,12 +57,16 @@ sim_death_age <- function(n, a = gompertz_a, b = gompertz_b, entry_age = 40) {
 theme_fs <- function() {
   theme_minimal(base_size = 13) +
     theme(
-      plot.title       = element_text(face = "bold", size = 14),
-      plot.subtitle    = element_text(size = 11, color = "grey40"),
-      plot.caption     = element_text(size = 9,  color = "grey55", hjust = 0.5),
-      panel.grid.minor = element_blank(),
-      axis.title       = element_text(size = 11),
-      axis.text        = element_text(size = 10)
+      plot.title        = element_text(face = "bold", size = 14),
+      plot.subtitle     = element_text(size = 11, color = "grey40"),
+      plot.caption      = element_text(size = 9,  color = "grey55", hjust = 0.5),
+      panel.grid.minor  = element_blank(),
+      axis.title        = element_text(size = 11),
+      axis.text         = element_text(size = 10),
+      plot.background   = element_rect(fill = "transparent", color = NA),
+      panel.background  = element_rect(fill = "transparent", color = NA),
+      legend.background = element_rect(fill = "transparent", color = NA),
+      legend.key        = element_rect(fill = "transparent", color = NA)
     )
 }
 
@@ -152,7 +156,7 @@ p1 <- ggplot(nmsc_km, aes(x = time, y = estimate, color = strata)) +
         legend.key = element_blank())
 
 dir.create("figures", showWarnings = FALSE)
-ggsave("figures/fig1_nmsc.png", p1, width = 8, height = 5, dpi = 300, bg = "white")
+ggsave("figures/fig1_nmsc.png", p1, width = 8, height = 5, dpi = 300, bg = "transparent")
 ggsave("figures/fig1_nmsc.pdf", p1, width = 8, height = 5, bg = "white")
 cat("Saved figures/fig1_nmsc.png + .pdf\n\n")
 
@@ -214,7 +218,7 @@ p2 <- ggplot(prize_km, aes(x = time, y = estimate, color = strata)) +
   theme(legend.position = "bottom",
         legend.key = element_blank())
 
-ggsave("figures/fig2_prize.png", p2, width = 8, height = 5, dpi = 300, bg = "white")
+ggsave("figures/fig2_prize.png", p2, width = 8, height = 5, dpi = 300, bg = "transparent")
 ggsave("figures/fig2_prize.pdf", p2, width = 8, height = 5, bg = "white")
 cat("Saved figures/fig2_prize.png + .pdf\n\n")
 
@@ -284,7 +288,7 @@ p3 <- ggplot(correct_km, aes(x = time, y = estimate, color = strata)) +
   theme(legend.position = "bottom",
         legend.key = element_blank())
 
-ggsave("figures/fig3_correct.png", p3, width = 8, height = 5, dpi = 300, bg = "white")
+ggsave("figures/fig3_correct.png", p3, width = 8, height = 5, dpi = 300, bg = "transparent")
 ggsave("figures/fig3_correct.pdf", p3, width = 8, height = 5, bg = "white")
 cat("Saved figures/fig3_correct.png + .pdf\n\n")
 
