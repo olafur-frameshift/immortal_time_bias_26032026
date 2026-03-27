@@ -1,4 +1,4 @@
-# The Sun, Skin Cancer, and a Statistical Sun Burn
+# Sun Exposure, Skin Cancer, and a Methodological Sunburn
 
 **Author:** Ólafur B Davíðsson, PhD | **Date:** 2026-03-26 | **Frameshift Insights**
 
