@@ -153,7 +153,8 @@ p1 <- ggplot(nmsc_km, aes(x = time, y = estimate, color = strata)) +
 
 dir.create("figures", showWarnings = FALSE)
 ggsave("figures/fig1_nmsc.png", p1, width = 8, height = 5, dpi = 300, bg = "white")
-cat("Saved figures/fig1_nmsc.png\n\n")
+ggsave("figures/fig1_nmsc.pdf", p1, width = 8, height = 5, bg = "white")
+cat("Saved figures/fig1_nmsc.png + .pdf\n\n")
 
 # =============================================================================
 # Figure 2: Prize analogy (biased)
@@ -214,7 +215,8 @@ p2 <- ggplot(prize_km, aes(x = time, y = estimate, color = strata)) +
         legend.key = element_blank())
 
 ggsave("figures/fig2_prize.png", p2, width = 8, height = 5, dpi = 300, bg = "white")
-cat("Saved figures/fig2_prize.png\n\n")
+ggsave("figures/fig2_prize.pdf", p2, width = 8, height = 5, bg = "white")
+cat("Saved figures/fig2_prize.png + .pdf\n\n")
 
 # =============================================================================
 # Figure 3: Correct analysis — follow-up from prize date
@@ -283,7 +285,8 @@ p3 <- ggplot(correct_km, aes(x = time, y = estimate, color = strata)) +
         legend.key = element_blank())
 
 ggsave("figures/fig3_correct.png", p3, width = 8, height = 5, dpi = 300, bg = "white")
-cat("Saved figures/fig3_correct.png\n\n")
+ggsave("figures/fig3_correct.pdf", p3, width = 8, height = 5, bg = "white")
+cat("Saved figures/fig3_correct.png + .pdf\n\n")
 
 # =============================================================================
 # Summary

@@ -6,7 +6,7 @@
 
 In 2013, Brøndum-Jacobsen and colleagues published a study in the *International Journal of Epidemiology* testing whether sun exposure (proxied by skin cancer diagnosis) was associated with better downstream health outcomes. The logic is biologically plausible: more sun means more vitamin D, and vitamin D has known effects on bone metabolism and cardiovascular function.
 
-The dataset is, by any standard, impressive. The investigators used linked Danish national registries covering the **entire Danish population above age 40 from 1980 to 2006**, comprising 4.4 million individuals. This is about as close to complete population follow-up as epidemiology gets. No sampling error, near-zero loss to follow-up, diagnoses from validated national registries.
+The dataset is, by any standard, impressive. The investigators used linked Danish national registries covering the **entire Danish population above age 40 from 1980 to 2006**, comprising 4.4 million individuals. Denmark's administrative registers are among the most valuable resources in epidemiology: every resident carries a unique civil registration number (CPR) assigned at birth, enabling exact linkage across the National Patient Registry, the Cancer Registry, the Civil Registration System, and the Cause of Death Registry without loss to follow-up. There is no sampling, no recall bias, and near-complete ascertainment of diagnoses and deaths across a quarter century. Few countries can offer this, and it is why Danish register studies carry real weight.
 
 The results were striking. Compared to the general population:
 
