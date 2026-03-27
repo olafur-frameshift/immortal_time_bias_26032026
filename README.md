@@ -4,25 +4,23 @@
 
 ---
 
-In 2013, Brøndum-Jacobsen and colleagues published a study in the *International Journal of Epidemiology* testing whether sun exposure (proxied by skin cancer diagnosis) was associated with better downstream health outcomes. The logic is biologically plausible: more sun means more vitamin D, and vitamin D has known effects on bone metabolism and cardiovascular function.
+In 2013, Brøndum-Jacobsen and colleagues published a study in the *International Journal of Epidemiology* testing whether sun exposure (proxied by skin cancer diagnosis) was associated with better downstream health outcomes. The logic is biologically plausible: more sun means more vitamin D, with downstream effects on bone metabolism and cardiovascular function.
 
-The dataset is, by any standard, impressive. The investigators used linked Danish national registries covering the **entire Danish population above age 40 from 1980 to 2006**, comprising 4.4 million individuals. Denmark's administrative registers are among the most valuable resources in epidemiology: every resident carries a unique civil registration number (CPR) assigned at birth, enabling exact linkage across the National Patient Registry, the Cancer Registry, the Civil Registration System, and the Cause of Death Registry without loss to follow-up. There is no sampling, no recall bias, and near-complete ascertainment of diagnoses and deaths across a quarter century. Few countries can offer this, and it is why Danish register studies carry real weight.
+The dataset is exceptional. The investigators used linked Danish national registries covering the **entire Danish population above age 40 from 1980 to 2006** — 4.4 million individuals. Denmark's administrative registers are among the most valuable resources in epidemiology: every resident carries a unique civil registration number (CPR) assigned at birth, enabling exact linkage across the National Patient Registry, the Cancer Registry, the Civil Registration System, and the Cause of Death Registry. No sampling, no recall bias, near-complete ascertainment of diagnoses and deaths across a quarter century. Few countries can offer this, which is why Danish register studies carry genuine epidemiological weight.
 
 The results were striking. Compared to the general population:
 
-- Patients with **non-melanoma skin cancer (NMSC)** had an adjusted **HR = 0.52 for all-cause mortality**; their risk of dying appeared to be cut in half.
+- Patients with **non-melanoma skin cancer (NMSC)** had an adjusted **HR = 0.52 for all-cause mortality** — risk of dying apparently halved.
 - They also had lower rates of myocardial infarction and, in those under 90, lower rates of hip fracture.
-- Melanoma patients showed a similar but smaller pattern: HR = 0.89 for all-cause mortality.
+- Melanoma patients showed a similar but attenuated pattern: HR = 0.89 for all-cause mortality.
 
-The biological story writes itself. Sun exposure leads to vitamin D synthesis, which drives calcium metabolism, which produces stronger bones and fewer hip fractures. Or: sun exposure releases nitric oxide, which causes vasodilation, which lowers cardiovascular mortality. Both mechanisms are real phenomena. The effect sizes are large, the confidence intervals are razor-thin from the enormous sample, and the consistency across outcomes is compelling.
-
-The authors themselves were careful to note: *"Causal conclusions cannot be made from our data."* But results like these have a way of persisting in the literature without their caveats.
+The mechanisms practically volunteer themselves: sun exposure, vitamin D synthesis, calcium metabolism, stronger bones, fewer fractures. Or nitric oxide, vasodilation, lower cardiovascular mortality. Both pathways are real. The confidence intervals are razor-thin from the enormous sample size, and the consistency across outcomes is persuasive. The authors were careful: *"Causal conclusions cannot be made from our data."* But effect sizes like these rarely stay confined to their caveats.
 
 The simulation below reproduces the study design under the assumption that skin cancer has **zero causal effect on mortality**. Mortality is drawn from a Gompertz model calibrated to Danish population life tables. The grey band marks the immortal time window.
 
 ![Figure 1: NMSC study design](figures/fig1_nmsc.png)
 
-*Simulation of the Brøndum-Jacobsen study design. With no true protective effect, NMSC patients show HR = 0.68 (95% CI 0.66–0.70) for all-cause mortality, closely mirroring the paper's reported HR = 0.52. The grey region marks the immortal time window: the period from age 40 to the average diagnosis age, during which cases had to survive in order to be classified as cases at all.*
+*Simulation of the Brøndum-Jacobsen study design with no true protective effect built in. NMSC patients show HR = 0.68 (95% CI 0.66–0.70) for all-cause mortality, in the same direction and order of magnitude as the paper's HR = 0.52. The grey region is the immortal time window: the span from age 40 to the average diagnosis age, during which cases had to survive to be classified as cases.*
 
 ---
 
@@ -30,43 +28,35 @@ The simulation below reproduces the study design under the assumption that skin 
 
 NMSC (basal cell carcinoma and squamous cell carcinoma) accumulates over a lifetime of sun exposure and is **typically diagnosed between ages 60 and 80**, well after the study's age-40 entry point. This creates a structural problem.
 
-To appear in the "NMSC group," a patient had to survive to their diagnosis. A person diagnosed at age 72 was, by definition, alive from age 40 to age 72. That 32-year window is **immortal time**: they could not have died during it and still ended up in the skin cancer group. Yet this entire survival window enters the analysis as person-time, compared against a general population that includes everyone who died at 45, 55, or 65 before any such diagnosis was ever possible.
+To appear in the NMSC group, a patient had to survive to their diagnosis date. A person diagnosed at age 72 was, by definition, alive from age 40 to 72. That 32-year window is **immortal time**: they could not have died during it and still received a diagnosis. Yet this entire span enters the analysis as person-time, compared against a general population that includes everyone who died at 45, 55, or 65, before any diagnosis was possible. The exposed group accrues a guaranteed survival advantage that has nothing to do with sun exposure, vitamin D, or any biological mechanism.
 
-This is not confounding. It is not selection bias in the traditional sense. It is a direct consequence of how the comparison groups are constructed. The exposed group accrues a guaranteed survival advantage that has nothing to do with sun exposure, vitamin D, or any biological mechanism whatsoever.
-
-To make this clear, consider the following thought experiment: instead of a skin cancer diagnosis, we award a **lottery prize** to a randomly selected subset of the cohort. The prize is awarded at a random age between 70 and 80, purely by chance, with no connection to health, behaviour, or biology.
-
-We then set up the same study: follow everyone from age 40, compare prize winners to non-winners for all-cause mortality.
+To isolate this, consider a thought experiment: instead of a skin cancer diagnosis, we award a **lottery prize** to a random subset of the cohort at a random age between 70 and 80. No selection on health. No biology. We then run the same analysis, comparing prize winners to non-winners for all-cause mortality from age 40.
 
 ![Figure 2: Lottery prize analogy](figures/fig2_prize.png)
 
-*A randomly awarded lottery prize, with no conceivable biological mechanism, produces HR = 0.57 (95% CI 0.55–0.59) for all-cause mortality. The effect is actually larger than in the NMSC simulation, because the prize window (ages 70–80) sits later in life than the NMSC diagnostic window (ages 60–80), creating a longer immortal time window on average.*
+*A randomly awarded lottery prize, with no conceivable biological mechanism, produces HR = 0.57 (95% CI 0.55–0.59) for all-cause mortality. The effect is larger than in the NMSC simulation because the prize window (ages 70–80) sits later in life than the NMSC diagnostic window (ages 60–80), creating a longer average immortal period.*
 
-The lottery makes explicit what the skin cancer design obscures: **the "protective effect" is a property of the study design, not of the exposure.** Any event awarded after study entry that requires surviving to receive it will produce exactly this pattern. The magnitude of the effect scales directly with how late the event occurs, which is precisely why the NMSC effect (HR = 0.52, diagnosed in the 60s–80s) dwarfs the melanoma effect (HR = 0.89, diagnosed earlier and also directly lethal).
-
-The biological narrative is constructed after the fact to fit a result that would have emerged regardless of what the exposure was.
+The prize produces a larger apparent protective effect than the skin cancer diagnosis — purely because it is awarded later. The magnitude of immortal time bias scales directly with how late the qualifying event occurs, which is also why the NMSC effect (HR = 0.52, diagnosed in the 60s–80s) dwarfs the melanoma effect (HR = 0.89, diagnosed earlier and itself directly lethal). The biology is irrelevant; the timing is everything.
 
 ---
 
 ## The Correction
 
-The fix is straightforward. Instead of starting follow-up at age 40 for everyone, we start follow-up at the **date of the prize award**. Controls are assigned a corresponding pseudo-prize date at the same age as their matched case. Both groups now begin observation at the same point in time. The immortal window is removed.
+Rather than starting follow-up at age 40 for everyone, we start at the **prize award date**. Controls are assigned a pseudo-prize at the same age as their matched case. Both groups now begin observation at the same point; the immortal window is removed.
 
 ![Figure 3: Correct analysis](figures/fig3_correct.png)
 
-*Once follow-up begins at the prize date and controls are assigned a matched pseudo-prize age, the curves collapse onto each other. HR = 0.97 (95% CI 0.93–1.01), p = 0.14. There is no effect, because there never was one.*
+*Once follow-up begins at the prize date and controls are assigned a matched pseudo-prize age, the curves overlap. HR = 0.97 (95% CI 0.93–1.01), p = 0.14. No effect — as expected.*
 
-The equivalent correction in the original study would be to use the skin cancer diagnosis date as the index date for each patient, counting only person-time after the diagnosis, or to implement the exposure as a time-varying covariate in a Cox model, where individuals contribute unexposed time until diagnosis and exposed time thereafter.
+The equivalent correction in the original study would be to use the skin cancer diagnosis date as the index date, counting only person-time after diagnosis, or to model exposure as a time-varying covariate in a Cox model, where each individual contributes unexposed time until diagnosis and exposed time thereafter.
 
 ---
 
 ## Take-Home
 
-Immortal time bias is easy to introduce and easy to miss. The conditions that produce it (a large national registry, a long follow-up, a diagnosis that requires surviving to be diagnosed) are exactly the conditions of many high-profile observational studies. The bias is also easy to rationalise post-hoc: when the result fits a plausible mechanism, the temptation to work backwards from the finding to the story is strong.
+Immortal time bias is structurally invisible in the most common study designs: large registry cohorts, long follow-up, exposures defined by events that require surviving to experience them. These are also the conditions associated with high-powered, high-credibility studies. The bias does not appear in any coefficient; it lives in the denominator.
 
-The lottery prize exercise removes the biology entirely and shows that the result survives. That is the diagnostic. If you can replace the exposure with something biologically inert and get the same answer, the exposure is not doing the work; the design is.
-
-In matched or registry-based cohort studies, always ask: when does follow-up start, and is that the same for cases and controls? If cases are defined by an event that occurs after study entry, and controls are drawn from a general population without that constraint, you are likely looking at immortal time.
+The lottery exercise makes the diagnostic explicit. If replacing the exposure with something biologically inert produces the same result, the exposure is not doing the work. In matched or registry-based cohort studies, the key question is simple: does follow-up start at the same calendar time for cases and controls? If cases are defined by a post-baseline event and controls are not subject to that constraint, you are likely looking at immortal time.
 
 ---
 
@@ -121,7 +111,7 @@ Full script including figures: [`analysis.R`](analysis.R)
 
 ---
 
-*At [Frameshift](https://www.frameshift.dk), we work at the intersection of clinical trial methodology, epidemiology, and biostatistics. Problems like this (where a technically defensible analysis produces a deeply misleading result) are exactly the kind of thing we think about. If your study design involves registry data, post-baseline exposures, or time-to-event outcomes, [get in touch](https://www.frameshift.dk).*
+*At [Frameshift](https://www.frameshift.dk), we work at the intersection of clinical trial methodology, epidemiology, and biostatistics. If your work involves registry data, time-to-event outcomes, or post-baseline exposures, [get in touch](https://www.frameshift.dk).*
 
 ---
 
